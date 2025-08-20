@@ -217,13 +217,31 @@ export const AnimatedA = ({ onAnimationComplete }: AnimatedAProps) => {
     if (webcam.faceDetection) {
       personality.onFaceDetected();
       
-      // A reacts to face detection
+      // Dramatic reaction to face detection
       if (aRef.current) {
+        // Change to eye emoji when someone is detected
+        setCurrentShape("👁️");
+        
+        // Pulsing glow effect with sound
         animate(aRef.current, {
-          scale: [1, 1.1, 1],
-          duration: 500,
-          ease: 'outBounce'
+          scale: [1, 1.3, 1.1],
+          rotate: '+=180',
+          duration: 1000,
+          ease: 'outElastic(1, .8)'
         });
+        
+        // Play detection sound
+        audioEffects.playAmbientSpace();
+        
+        // Speak detection phrase
+        setTimeout(() => {
+          speechSynthesis.speakWhisper();
+        }, 500);
+        
+        // Reset shape after a moment
+        setTimeout(() => {
+          setCurrentShape("A");
+        }, 3000);
       }
     }
   }, [webcam.faceDetection]);
@@ -232,26 +250,99 @@ export const AnimatedA = ({ onAnimationComplete }: AnimatedAProps) => {
     if (webcam.isSmiling) {
       personality.onSmileDetected();
       
-      // A gets happy when it sees a smile
+      // Explosive happy reaction when smiling!
       if (aRef.current) {
-        audioEffects.playMusicalSequence();
-        setCurrentShape(shapes[Math.floor(Math.random() * shapes.length)]);
+        // Change to super happy face
+        setCurrentShape("😆");
+        
+        // Multi-stage celebration animation
         animate(aRef.current, {
-          scale: [1, 1.3, 1],
-          rotate: '+=45',
-          duration: 800,
-          ease: 'outElastic(1, .6)'
+          rotate: [0, 360, 720],
+          scale: [1, 1.8, 1.3],
+          translateY: [0, -60, 0],
+          duration: 1500,
+          ease: 'outBounce'
         });
+        
+        // Sound celebration
+        audioEffects.playMusicalSequence();
+        setTimeout(() => audioEffects.playCosmicWhoosh(), 400);
+        setTimeout(() => audioEffects.playExplosion(), 800);
+        
+        // Excited speech
+        setTimeout(() => {
+          speechSynthesis.speakCrazyPhrase();
+        }, 300);
+        
+        // Trigger glitch effect for extra fun
+        setTimeout(() => {
+          triggerGlitchEffect();
+        }, 600);
+        
+        // Reset shape after celebration
+        setTimeout(() => {
+          setCurrentShape("A");
+        }, 4000);
       }
     }
   }, [webcam.isSmiling]);
+
+  // ANGRY reaction
+  useEffect(() => {
+    if (webcam.isAngry) {
+      personality.onAngerDetected?.();
+
+      if (aRef.current) {
+        setCurrentShape("😡");
+
+        // Rapid shake & red flash
+        animate(aRef.current, {
+          translateX: [0, -20, 20, -15, 15, -10, 10, 0],
+          backgroundColor: ["#f00", "#fff"],
+          duration: 600,
+          easing: "easeInOutSine"
+        });
+
+        audioEffects.playGlitchEffect();
+
+        setTimeout(() => {
+          setCurrentShape("A");
+        }, 3000);
+      }
+    }
+  }, [webcam.isAngry]);
+
+  // SAD reaction
+  useEffect(() => {
+    if (webcam.isSad) {
+      personality.onSadDetected?.();
+
+      if (aRef.current) {
+        setCurrentShape("😢");
+
+        // Slow droop animation
+        animate(aRef.current, {
+          translateY: [0, 20, 0],
+          scale: [1, 0.8, 1],
+          duration: 1200,
+          easing: "easeInOutQuad"
+        });
+
+        audioEffects.playAmbientSpace();
+
+        setTimeout(() => {
+          setCurrentShape("A");
+        }, 3000);
+      }
+    }
+  }, [webcam.isSad]);
   
   return (
-    <div className="relative">
+    <div className="relative animated-a-container">
       <div
         ref={aRef}
         className={`
-          text-[20rem] font-black cursor-pointer select-none
+          text-[6rem] sm:text-[8rem] md:text-[10rem] lg:text-[12rem] xl:text-[14rem] font-black cursor-pointer select-none
           bg-gradient-cosmic bg-clip-text text-transparent
           drop-shadow-[0_0_30px_hsl(var(--a-primary)/0.5)]
           transition-all duration-300
@@ -284,35 +375,6 @@ export const AnimatedA = ({ onAnimationComplete }: AnimatedAProps) => {
         }}
       />
       
-      {/* Webcam controls */}
-      <div className="absolute -bottom-24 left-1/2 transform -translate-x-1/2">
-        <button
-          onClick={() => webcam.isActive ? webcam.stopWebcam() : webcam.startWebcam()}
-          className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg text-sm font-medium hover:scale-105 transition-transform"
-        >
-          {webcam.isActive ? '📷 Stop Camera' : '📷 Start Camera'}
-        </button>
-        {webcam.isActive && (
-          <div className="mt-2 text-xs text-center text-muted-foreground">
-            {webcam.faceDetection 
-              ? `👁️ Face detected! ${webcam.isSmiling ? '😊 Smiling!' : '😐'}` 
-              : '👁️ Looking for faces...'}
-          </div>
-        )}
-      </div>
-      
-      {/* Personality indicator */}
-      <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 text-center">
-        <div className="text-sm font-medium text-muted-foreground mb-1">
-          Mood: {personality.personality.current.toUpperCase()}
-        </div>
-        <div className="flex space-x-2 text-xs">
-          <span>⚡{Math.round(personality.personality.energy)}</span>
-          <span>😊{Math.round(personality.personality.happiness)}</span>
-          <span>🌪️{Math.round(personality.personality.chaos)}</span>
-          <span>👁️{Math.round(personality.personality.attention)}</span>
-        </div>
-      </div>
     </div>
   );
 };

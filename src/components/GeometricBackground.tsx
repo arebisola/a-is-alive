@@ -42,9 +42,9 @@ export const GeometricBackground = () => {
           break;
       }
       
-      // Random position
-      shape.style.left = Math.random() * 100 + 'vw';
-      shape.style.top = Math.random() * 100 + 'vh';
+      // Random position within safe bounds
+      shape.style.left = (Math.random() * 80 + 10) + 'vw'; // Between 10-90vw
+      shape.style.top = (Math.random() * 80 + 10) + 'vh'; // Between 10-90vh
       
       containerRef.current.appendChild(shape);
       shapeElements.push(shape);

@@ -7,8 +7,8 @@ export const ParticleField = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Create particles
-    const particleCount = 30;
+    // Create fewer particles on mobile for better performance
+    const particleCount = window.innerWidth < 768 ? 15 : 30;
     const particles: HTMLDivElement[] = [];
 
     for (let i = 0; i < particleCount; i++) {
@@ -28,9 +28,9 @@ export const ParticleField = () => {
       particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
       particle.style.boxShadow = '0 0 10px currentColor';
       
-      // Random starting position
-      particle.style.left = Math.random() * 100 + 'vw';
-      particle.style.top = Math.random() * 100 + 'vh';
+      // Random starting position within safe bounds
+      particle.style.left = (Math.random() * 80 + 10) + 'vw'; // Between 10-90vw
+      particle.style.top = (Math.random() * 80 + 10) + 'vh'; // Between 10-90vh
       
       containerRef.current.appendChild(particle);
       particles.push(particle);
