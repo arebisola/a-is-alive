@@ -1,7 +1,5 @@
 import { useEffect, useRef } from "react";
-
-// @ts-ignore
-const anime = require('animejs');
+import { animate } from "animejs";
 
 export const ParticleField = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -40,18 +38,17 @@ export const ParticleField = () => {
 
     // Animate particles
     particles.forEach((particle, index) => {
-      anime({
-        targets: particle,
-        translateX: () => anime.random(-200, 200),
-        translateY: () => anime.random(-200, 200),
+      animate(particle, {
+        translateX: () => Math.random() * 400 - 200, // Random between -200 and 200
+        translateY: () => Math.random() * 400 - 200, // Random between -200 and 200
         scale: [0.5, 1.5, 0.5],
         opacity: [0.3, 0.8, 0.3],
-        rotate: () => anime.random(0, 360),
-        duration: () => anime.random(3000, 6000),
+        rotate: () => Math.random() * 360, // Random between 0 and 360
+        duration: () => Math.random() * 3000 + 3000, // Random between 3000 and 6000
         delay: index * 100,
         direction: 'alternate',
         loop: true,
-        easing: 'easeInOutSine'
+        ease: 'inOutSine'
       });
     });
 

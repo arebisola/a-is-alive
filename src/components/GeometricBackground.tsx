@@ -1,7 +1,5 @@
 import { useEffect, useRef } from "react";
-
-// @ts-ignore
-const anime = require('animejs');
+import { animate } from "animejs";
 
 export const GeometricBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,18 +52,17 @@ export const GeometricBackground = () => {
 
     // Animate shapes
     shapeElements.forEach((shape, index) => {
-      anime({
-        targets: shape,
-        translateX: () => anime.random(-100, 100),
-        translateY: () => anime.random(-100, 100),
+      animate(shape, {
+        translateX: () => Math.random() * 200 - 100, // Random between -100 and 100
+        translateY: () => Math.random() * 200 - 100, // Random between -100 and 100
         rotate: '+=360',
         scale: [0.8, 1.2, 0.8],
         opacity: [0.05, 0.15, 0.05],
-        duration: () => anime.random(8000, 15000),
+        duration: () => Math.random() * 7000 + 8000, // Random between 8000 and 15000
         delay: index * 1000,
         direction: 'alternate',
         loop: true,
-        easing: 'easeInOutQuad'
+        ease: 'inOutQuad'
       });
     });
 

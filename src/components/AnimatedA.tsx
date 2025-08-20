@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
-// @ts-ignore
-const anime = require('animejs');
+import { animate } from "animejs";
 
 interface AnimatedAProps {
   onAnimationComplete?: () => void;
@@ -16,24 +14,22 @@ export const AnimatedA = ({ onAnimationComplete }: AnimatedAProps) => {
     if (!aRef.current) return;
 
     // Initial entrance animation
-    anime({
-      targets: aRef.current,
+    animate(aRef.current, {
       scale: [0, 1],
       rotate: [180, 0],
       opacity: [0, 1],
       duration: 2000,
-      easing: 'easeOutElastic(1, .8)',
-      complete: onAnimationComplete
+      ease: 'outElastic(1, .8)',
+      onComplete: onAnimationComplete
     });
 
     // Continuous floating animation
-    anime({
-      targets: aRef.current,
+    animate(aRef.current, {
       translateY: [-10, 10],
       duration: 3000,
       direction: 'alternate',
       loop: true,
-      easing: 'easeInOutSine'
+      ease: 'inOutSine'
     });
   }, [onAnimationComplete]);
 
@@ -41,12 +37,11 @@ export const AnimatedA = ({ onAnimationComplete }: AnimatedAProps) => {
     if (!aRef.current) return;
     setIsHovered(true);
     
-    anime({
-      targets: aRef.current,
+    animate(aRef.current, {
       scale: 1.2,
       rotate: '+=15',
       duration: 300,
-      easing: 'easeOutQuart'
+      ease: 'outQuart'
     });
   };
 
@@ -54,12 +49,11 @@ export const AnimatedA = ({ onAnimationComplete }: AnimatedAProps) => {
     if (!aRef.current) return;
     setIsHovered(false);
     
-    anime({
-      targets: aRef.current,
+    animate(aRef.current, {
       scale: 1,
       rotate: '-=15',
       duration: 300,
-      easing: 'easeOutQuart'
+      ease: 'outQuart'
     });
   };
 
@@ -69,27 +63,24 @@ export const AnimatedA = ({ onAnimationComplete }: AnimatedAProps) => {
     
     const animations = [
       // Spin and scale
-      () => anime({
-        targets: aRef.current,
+      () => animate(aRef.current, {
         rotate: '+=360',
         scale: [1, 1.5, 1],
         duration: 800,
-        easing: 'easeOutBounce'
+        ease: 'outBounce'
       }),
       // Shake and glow
-      () => anime({
-        targets: aRef.current,
+      () => animate(aRef.current, {
         translateX: [0, -30, 30, -20, 20, -10, 10, 0],
         duration: 600,
-        easing: 'easeOutElastic(1, .6)'
+        ease: 'outElastic(1, .6)'
       }),
       // Morph and color shift
-      () => anime({
-        targets: aRef.current,
+      () => animate(aRef.current, {
         scale: [1, 0.5, 2, 1],
         rotate: '+=180',
         duration: 1000,
-        easing: 'easeInOutBack'
+        ease: 'inOutBack'
       })
     ];
 
