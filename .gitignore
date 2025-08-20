@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#docs
+FEATURE_SUGGESTIONS.md
+WEBCAM_GUIDE.md
