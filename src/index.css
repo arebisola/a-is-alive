@@ -96,3 +96,142 @@ All colors MUST be HSL.
     background: var(--gradient-subtle);
   }
 }
+
+/* Custom crazy animations */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes rainbow-text {
+  0% { color: #ff0000; }
+  16.67% { color: #ff7f00; }
+  33.33% { color: #ffff00; }
+  50% { color: #00ff00; }
+  66.67% { color: #0000ff; }
+  83.33% { color: #4b0082; }
+  100% { color: #9400d3; }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes matrix-rain {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes chaos-spin {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(90deg) scale(1.2); }
+  50% { transform: rotate(180deg) scale(0.8); }
+  75% { transform: rotate(270deg) scale(1.5); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes color-shift {
+  0% { filter: hue-rotate(0deg); }
+  25% { filter: hue-rotate(90deg); }
+  50% { filter: hue-rotate(180deg); }
+  75% { filter: hue-rotate(270deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-rainbow-text {
+  animation: rainbow-text 2s linear infinite;
+}
+
+.animate-glitch {
+  animation: glitch 0.3s linear infinite;
+}
+
+.animate-chaos-spin {
+  animation: chaos-spin 2s linear infinite;
+}
+
+.animate-color-shift {
+  animation: color-shift 3s linear infinite;
+}
+
+.text-rainbow {
+  background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow-gradient 2s ease infinite;
+}
+
+@keyframes rainbow-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Ultra chaos mode styles */
+.ultra-chaos {
+  animation: 
+    chaos-spin 1s linear infinite,
+    color-shift 2s linear infinite,
+    glitch 0.5s linear infinite;
+}
+
+/* Fractal explosion effect */
+@keyframes fractal-explosion {
+  0% { 
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    border-radius: 50%;
+  }
+  50% { 
+    transform: scale(5) rotate(180deg);
+    opacity: 0.5;
+    border-radius: 0%;
+  }
+  100% { 
+    transform: scale(10) rotate(360deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+}
+
+.animate-fractal-explosion {
+  animation: fractal-explosion 1s ease-out;
+}
+
+/* Personality system styles */
+.personality-happy {
+  filter: brightness(1.3) saturate(1.5);
+  animation: bounce 2s infinite;
+}
+
+.personality-angry {
+  filter: contrast(2) saturate(2);
+  animation: shake 0.5s infinite;
+}
+
+.personality-sleepy {
+  filter: blur(1px) opacity(0.7);
+  animation: sway 3s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
