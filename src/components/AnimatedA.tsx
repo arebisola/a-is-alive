@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+
 // @ts-ignore
-import anime from "animejs";
+const anime = require('animejs');
 
 interface AnimatedAProps {
   onAnimationComplete?: () => void;

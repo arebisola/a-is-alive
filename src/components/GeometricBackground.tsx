@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
+
 // @ts-ignore
-import anime from "animejs";
+const anime = require('animejs');
 
 export const GeometricBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
